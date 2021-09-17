@@ -11,3 +11,7 @@ class Contato(models.Model):
     data_criacao = models.DateTimeField(default=timezone.now)
     categoria = models.ForeignKey(to=Categoria, on_delete=DO_NOTHING)
     telefone = models.CharField(max_length=20, null=True)
+    ativo = models.BooleanField(default=True)
+
+    def __str__(self) -> str:
+        return self.nome
