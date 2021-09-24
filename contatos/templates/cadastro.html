@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+{% if not valido and valido is not None %}
+    <div class="alert alert-danger">
+    <strong> {{mensagem}}</strong>
+{% endif %}
+
+<form method="POST" action="{% url 'cadastro' %}">{% csrf_token %}
+  <div class="col-md-6">
+    <label for="nome" class="form-label">Nome</label>
+    <input type="text" value="{{request.POST.nome}}" name="nome" class="form-control" id="nome">
+  </div>
+
+  <div class="col-md-6">
+    <label for="sobre_nome" class="form-label">Sobrenome</label>
+    <input type="text" value="{{request.POST.sobrenome}}" name="sobrenome" class="form-control" id="sobrenome">
+  </div>
+
+  <div class="col-12">
+    <label for="email" class="form-label">E-mail</label>
+    <input type="email" value="{{request.POST.email}}" name="email" class="form-control" id="email" placeholder="Exemplo@email.com">
+  </div>
+
+  <div class="col-md-4">
+    <label for="categoria" class="form-label">Categoria</label>
+    <select id="categoria" class="form-select">
+    <option selected disabled>Escolha uma opção</option>
+    {% for c in categorias  %}
+      <option value="{{c}}">{{c.nome}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="telefone" class="form-label">Telefone</label>
+    <input type="text" value="{{request.POST.telefone}}" name="telefone" class="form-control" id="telefone">
+  </div>
+
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" value="{{request.POST.ativo}}" name="ativo" type="checkbox" id="gridCheck">
+      <label class="form-check-label" checked=False for="gridCheck">
+        Ativo
+      </label>
+    </div>
+  
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </div>
+</form>
+
+
+{% endblock container %}}

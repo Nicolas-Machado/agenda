@@ -4,8 +4,10 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from . import service
 from django.core.paginator import Paginator
+from .serializers import ContatosSerializer
+from categorias.service import CategoriaService
 
-import contatos
+CATEGORIA_SERVICE = CategoriaService()
 
 
 class ContatosView(APIView):
@@ -29,3 +31,15 @@ class ContatosBuscaView(APIView):
         page = request.GET.get('p')
         contatos = paginator.get_page(page)
         return render(request=request, template_name='home.html', context={'contatos': contatos})
+
+
+class cadastroUsuario(APIView):
+    def get(self, request):
+        categorias = CATEGORIA_SERVICE.busca_todas_categorias()
+        return render(request=request, template_name='cadastro.html', context={"categorias": categorias})
+
+    def post(self, request):
+        serializer = ContatosSerializer(data=request.data)
+        if not serializer.is_valid():
+            categorias = CATEGORIA_SERVICE.busca_todas_categorias()
+            return render(request=request, template_name='cadastro.html', context={'valido': False, "mensagem": "verifique os campos e tente novamente", "categorias": categorias})
