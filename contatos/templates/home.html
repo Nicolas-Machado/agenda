@@ -10,6 +10,7 @@
       <th scope="col">Telefone</th>
       <th scope="col">Data de Criação</th>
       <th scope="col">Categoria</th>
+      <th scope="col">Remover</th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,12 @@
       <td>{{contato.telefone}}</td>
       <td>{{contato.data_criacao|date:'d/M/Y'}}</td>
       <td>{{contato.categoria}}</td>
+      <td>
+        <form method="POST" action="{% url 'deletar' contato.id %}" > {% csrf_token %}
+          <button id="deletar" type="submit" class="btn btn-outline-danger">Excluir</button>
+          </form>
+
+      </td>
     </tr>
     {% endif %}
     {% endfor %}

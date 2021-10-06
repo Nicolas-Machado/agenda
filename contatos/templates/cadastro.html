@@ -39,13 +39,14 @@
 
   <div class="col-12">
     <div class="form-check">
-      <input class="form-check-input" value="{{request.POST.ativo}}" name="ativo" type="checkbox" id="gridCheck">
-      <label class="form-check-label" checked=False for="gridCheck">
+      <input class="form-check-input" name="ativo" type="checkbox" checked="True" id="ativo">
+      <label class="form-check-label" for="ativo">
         Ativo
       </label>
     </div>
   
   <div class="col-12">
+    <form <form method="POST" action="{% url 'cadastro'%}">
     <button type="submit" class="btn btn-primary">Cadastrar</button>
   </div>
 </form>

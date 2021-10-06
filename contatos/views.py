@@ -1,5 +1,5 @@
 from django.core import paginator
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from rest_framework.views import APIView
 from . import service
@@ -43,3 +43,12 @@ class cadastroUsuario(APIView):
         if not serializer.is_valid():
             categorias = CATEGORIA_SERVICE.busca_todas_categorias()
             return render(request=request, template_name='cadastro.html', context={'valido': False, "mensagem": "verifique os campos e tente novamente", "categorias": categorias})
+        serializer.save()
+        return HttpResponseRedirect('/')
+
+
+class contatosExcluirView(APIView):
+    def post(self, request, contato_id):
+        service.remover_contatos_por_id(contato_id)
+        contatos=service.buscar_todos_contatos()
+        return render(request,template_name='home.html', context={'contatos':contatos})
