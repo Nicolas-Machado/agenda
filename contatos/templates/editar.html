@@ -7,20 +7,20 @@
     <strong> {{mensagem}}</strong>
 {% endif %}
 
-<form method="POST" action="{% url 'cadastro' %}">{% csrf_token %}
+<form method="POST" action="{% url 'editar_salvar' %}">{% csrf_token %}
   <div class="col-md-6">
     <label for="nome" class="form-label">Nome</label>
-    <input type="text" value="{{request.POST.nome}}" name="nome" class="form-control" id="nome">
+    <input type="text" value="{{contato.nome}}" name="nome" class="form-control" id="nome">
   </div>
 
   <div class="col-md-6">
     <label for="sobre_nome" class="form-label">Sobrenome</label>
-    <input type="text" value="{{request.POST.sobrenome}}" name="sobre_nome" class="form-control" id="sobrenome">
+    <input type="text" value="{{contato.sobre_nome}}" name="sobre_nome" class="form-control" id="sobrenome">
   </div>
 
   <div class="col-12">
     <label for="email" class="form-label">E-mail</label>
-    <input type="email" value="{{request.POST.email}}" name="email" class="form-control" id="email" placeholder="Exemplo@email.com">
+    <input type="email" value="{{contato.email}}" name="email" class="form-control" id="email">
   </div>
 
   <div class="col-md-4">
@@ -38,7 +38,7 @@
   </div>
   <div class="col-md-6">
     <label for="telefone" class="form-label">Telefone</label>
-    <input type="text" value="{{request.POST.telefone}}" name="telefone" class="form-control" id="telefone">
+    <input type="text" value="{{contato.telefone}}" name="telefone" class="form-control" id="telefone">
   </div>
 
   <div class="col-12">
@@ -50,8 +50,7 @@
     </div>
   
   <div class="col-12">
-    <form <form method="POST" action="{% url 'cadastro'%}">
-    <button type="submit" class="btn btn-primary">Cadastrar</button>
+    <button type="submit" class="btn btn-primary">Enviar</button>
   </div>
 </form>
 

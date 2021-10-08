@@ -12,6 +12,3 @@ class Meta:
     db_table = 'CATEGORIA'
     verbose_name = 'categoria'
     verbose_name_plural = 'categorias'
-
-    def __str__(self) -> str:
-        return self.nome

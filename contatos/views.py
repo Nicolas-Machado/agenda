@@ -38,12 +38,13 @@ class cadastroUsuario(APIView):
         categorias = CATEGORIA_SERVICE.busca_todas_categorias()
         return render(request=request, template_name='cadastro.html', context={"categorias": categorias})
 
-    def post(self, request):
+    def post(self, request, contato_id=None):
         serializer = ContatosSerializer(data=request.data)
         if not serializer.is_valid():
             categorias = CATEGORIA_SERVICE.busca_todas_categorias()
             return render(request=request, template_name='cadastro.html', context={'valido': False, "mensagem": "verifique os campos e tente novamente", "categorias": categorias})
-        serializer.save()
+        if contato_id is None:
+            serializer.save()
         return HttpResponseRedirect('/')
 
 
@@ -52,3 +53,24 @@ class contatosExcluirView(APIView):
         service.remover_contatos_por_id(contato_id)
         contatos=service.buscar_todos_contatos()
         return render(request,template_name='home.html', context={'contatos':contatos})
+
+class contatosEditarView(APIView):
+
+    def get(self, request, contato_id):
+        contato = service.buscar_contatos_por_id(contato_id)
+        categorias = CATEGORIA_SERVICE.busca_todas_categorias()
+        return render(request=request, template_name='editar.html', context={"categorias":categorias, "contato":contato})
+
+    def post(self, request, contato_id=None):
+        if contato_id is not None:
+            contato = service.buscar_contatos_por_id(contato_id)
+            categorias = CATEGORIA_SERVICE.busca_todas_categorias()
+            return render(request=request, template_name='editar.html', context={"categorias":categorias, "contato":contato})
+        serializer = ContatosSerializer(data=request.data)
+        if not serializer.is_valid():
+            categorias = CATEGORIA_SERVICE.busca_todas_categorias()
+            return render(request=request, template_name='editar.html', context={"valido":False, "mensagem":"Verifique os campos e tente novamente", "categorias":categorias})
+        contato = service.buscar_contatos_por_id(id)
+        categoria = CATEGORIA_SERVICE.buscar_categoria_by_id( request.data.get('categoria'))
+        service.editar_contato(contato, request.data, categoria)
+        return HttpResponseRedirect('/')

@@ -31,8 +31,14 @@
         <form method="POST" action="{% url 'deletar' contato.id %}" > {% csrf_token %}
           <button id="deletar" type="submit" class="btn btn-outline-danger">Excluir</button>
           </form>
-
       </td>
+
+      <td> 
+      <form method="POST" action="{% url 'editar' contato.id %} "> {% csrf_token %}
+          <button id="editar" type="submit" class="btn btn-outline-danger">Editar</button>
+       </form>
+      </td>
+
     </tr>
     {% endif %}
     {% endfor %}

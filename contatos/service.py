@@ -1,5 +1,7 @@
 from django.db.models.functions import Concat
 from django.db.models import Q, Value
+
+from categorias.models import Categoria
 from.models import Contato
 
 
@@ -20,6 +22,20 @@ def buscar_contatos_por_termo(termo: str):
         ativo=True,
     )
 
+def editar_contato_por_id(id:int, data:dict):
+    return Contato.objects.filter(id=id).update(**data)
+
+def editar_contato_by_id(id:int, data:dict):
+    return Contato.objects.filter(id=id).update(**data)
+
+
+def editar_contato(contato:Contato, data:dict, categoria:Categoria) -> None:
+    contato.nome = data['nome']
+    contato.sobre_nome = data['sobre_nome']
+    contato.telefone = data['telefone']
+    contato.email = data['email']
+    contato.categoria = categoria
+    contato.save()
 
 def remover_contatos_por_id(id: int) -> int:
     return Contato.objects.filter(id=id).delete()
